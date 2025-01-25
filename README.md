@@ -2,6 +2,8 @@
 
 A simple inventory management software built within few hours.
 
+Live Link: https://resplendent-cocada-b593a2.netlify.app/
+
 ---
 
 ## About the Application 🚀
