@@ -1,12 +1,10 @@
-
-import './App.css'
-import { Button } from './components/ui/button'
+import { InventoryTable } from './components/app'
 
 function App() {
 
   return (
     <div>
-      <Button>Click me</Button>
+      <InventoryTable />
     </div>
   )
 }
