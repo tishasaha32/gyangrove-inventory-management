@@ -1,7 +1,7 @@
-import { Button } from "../ui/button";
 import { Ellipsis } from "lucide-react";
-import { TableCell, TableRow } from "../ui/table";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Button } from "@/components/ui/button";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 interface ColumnsProps {
     item: Product;
@@ -11,7 +11,6 @@ interface ColumnsProps {
 
 const Columns = ({ item, handleUpdateClick, handleDeleteClick }: ColumnsProps) => {
     return (
-        // <div>
         <TableRow
             key={item.uuid}
             className={
@@ -48,7 +47,6 @@ const Columns = ({ item, handleUpdateClick, handleDeleteClick }: ColumnsProps) =
                 </Popover>
             </TableCell>
         </TableRow>
-        // </div>
     );
 };
 

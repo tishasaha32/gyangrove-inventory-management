@@ -1,22 +1,18 @@
+import Sort from "./Sort";
+import Filter from "./Filter";
+import Search from "./Search";
+import Columns from "./Columns";
 import { useState } from "react";
 import AddDialog from "./AddDialog";
+import { Frown } from "lucide-react";
 import UpdateDialog from "./UpdateDialog";
 import DeleteDialog from "./DeleteDialog";
 import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
-import {
-    Table,
-    TableBody,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
-import Columns from "./Columns";
-import Search from "./Search";
-import Filter from "./Filter";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 const InventoryTable = () => {
     const products = JSON.parse(localStorage.getItem("products") || "[]");
+    console.log(products.length);
 
     //Function to handle search
     const [, setSearchTerm] = useState<string>("");
@@ -112,10 +108,7 @@ const InventoryTable = () => {
                     <Search handleSearch={handleSearch} />
                     <div className="flex flex-col md:flex-row gap-2">
                         <Filter handleFilterByCategory={handleFilterByCategory} />
-                        <Button variant="outline" onClick={() => handleSortByStock()}>
-                            Sort by Stock
-                            <ArrowUpDown size={16} />
-                        </Button>
+                        <Sort handleSortByStock={handleSortByStock} />
                         <Button variant="outline" onClick={() => setOpenAddDialog(true)}>
                             Add Product
                         </Button>
@@ -140,9 +133,20 @@ const InventoryTable = () => {
                             {filteredData?.length === 0 && !activeFilter && products?.map((item: Product) => (
                                 <Columns key={item.uuid} item={item} handleUpdateClick={handleUpdateClick} handleDeleteClick={handleDeleteClick} />
                             ))}
-                            {products?.length === 0 || (filteredData?.length === 0 && activeFilter) && (
-                                <h1 className="text-xl text-center">No products found</h1>
-                            )}
+                            {products?.length === 0 || (filteredData?.length === 0 && activeFilter) ? (
+                                <TableRow>
+                                    <TableCell colSpan={5} className="text-center">
+                                        <div className="flex items-center justify-center flex-col gap-2">
+                                            <div className="animate-nod">
+                                                <Frown className="h-16 w-16 text-center" />
+                                            </div>
+                                            <p className="text-xl">
+                                                No products found
+                                            </p>
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
+                            ) : null}
                         </TableBody>
                     </Table>
                 </div>

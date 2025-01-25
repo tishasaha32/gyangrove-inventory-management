@@ -4,10 +4,10 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormField } from "@/components/ui/form";
+import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { AddProductSchema } from "@/schemas/AddProduct";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup } from "../ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup } from "@/components/ui/select";
 
 interface UpdateDialogProps {
     openDialog: boolean;
@@ -81,54 +81,70 @@ const UpdateDialog = ({
                                 control={form.control}
                                 name="name"
                                 render={({ field }) => (
-                                    <Input
-                                        type="text"
-                                        placeholder="Enter Product Name"
-                                        {...field}
-                                    />
+                                    <FormItem>
+                                        <FormLabel className="text-default">Product Name<span className="text-destructive">*</span></FormLabel>
+                                        <Input
+                                            type="text"
+                                            placeholder="Enter Product Name"
+                                            {...field}
+                                        />
+                                        <FormMessage />
+                                    </FormItem>
                                 )}
                             />
                             <FormField
                                 control={form.control}
                                 name="price"
                                 render={({ field }) => (
-                                    <Input
-                                        type="number"
-                                        placeholder="Enter Product Price"
-                                        {...field}
-                                    />
+                                    <FormItem>
+                                        <FormLabel className="text-default">Product Price<span className="text-destructive">*</span></FormLabel>
+                                        <Input
+                                            type="number"
+                                            placeholder="Enter Product Price"
+                                            {...field}
+                                        />
+                                        <FormMessage />
+                                    </FormItem>
                                 )}
                             />
                             <FormField
                                 control={form.control}
                                 name="category"
                                 render={({ field }) => (
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Select a fruit" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectGroup>
-                                                <SelectItem value="Grocery">Grocery</SelectItem>
-                                                <SelectItem value="Electronics">Electronics</SelectItem>
-                                                <SelectItem value="Shoes">Shoes</SelectItem>
-                                                <SelectItem value="Accessories">Accessories</SelectItem>
-                                                <SelectItem value="Books">Books</SelectItem>
-                                                <SelectItem value="Others">Others</SelectItem>
-                                            </SelectGroup>
-                                        </SelectContent>
-                                    </Select>
+                                    <FormItem>
+                                        <FormLabel className="text-default">Product Category<span className="text-destructive">*</span></FormLabel>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select a Category" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    <SelectItem value="Grocery">Grocery</SelectItem>
+                                                    <SelectItem value="Electronics">Electronics</SelectItem>
+                                                    <SelectItem value="Shoes">Shoes</SelectItem>
+                                                    <SelectItem value="Accessories">Accessories</SelectItem>
+                                                    <SelectItem value="Books">Books</SelectItem>
+                                                    <SelectItem value="Others">Others</SelectItem>
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
                                 )}
                             />
                             <FormField
                                 control={form.control}
                                 name="stock"
                                 render={({ field }) => (
-                                    <Input
-                                        type="number"
-                                        placeholder="Enter Product Stock"
-                                        {...field}
-                                    />
+                                    <FormItem>
+                                        <FormLabel className="text-default">Product Stock<span className="text-destructive">*</span></FormLabel>
+                                        <Input
+                                            type="number"
+                                            placeholder="Enter Product Stock"
+                                            {...field}
+                                        />
+                                        <FormMessage />
+                                    </FormItem>
                                 )}
                             />
                         </div>

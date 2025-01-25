@@ -64,3 +64,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes nod {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+}
+
+.animate-nod {
+  animation: nod 1s ease-in-out infinite;
+}
