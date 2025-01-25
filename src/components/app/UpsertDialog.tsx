@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { v4 as uuidv4 } from 'uuid';
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -31,12 +32,16 @@ const UpsertDialog = ({ openDialog, setOpenDialog }: UpsertDialogProps) => {
 
 	// Submit the form data and set it in local storage
 	const onSubmit = (values: z.infer<typeof AddProductSchema>) => {
+		const payload = {
+			uuid: uuidv4(),
+			...values,
+		}
 		const products = localStorage.getItem("products");
 		let updatedProducts = [];
 		if (products) {
 			updatedProducts = JSON.parse(products);
 		}
-		updatedProducts.push(values);
+		updatedProducts.push(payload);
 		localStorage.setItem("products", JSON.stringify(updatedProducts));
 		onOpenChange(false);
 	};

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Ellipsis } from "lucide-react"
 import UpsertDialog from "./UpsertDialog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -7,8 +8,6 @@ const InventoryTable = () => {
 
     //get items from localStorage
     const data = JSON.parse(localStorage.getItem("products") || "[]");
-
-    console.log(data)
     const [openAddDialog, setOpenAddDialog] = useState<boolean>(false)
 
     return (
@@ -16,11 +15,11 @@ const InventoryTable = () => {
             {openAddDialog && (<UpsertDialog openDialog={openAddDialog} setOpenDialog={setOpenAddDialog} />)}
             <div className="flex flex-col items-center">
                 <h1 className="text-3xl font-bold m-4 text-center">Inventory Management System</h1>
-                <div className="flex md:w-1/2 justify-between gap-5 md:gap-10 p-6 mt-10">
+                <div className="flex lg:w-1/2 justify-between gap-5 md:gap-10 p-6 mt-10">
                     <Input placeholder="Search..." />
                     <Button variant="outline" onClick={() => setOpenAddDialog(true)}>Add New Product</Button>
                 </div>
-                <div className="md:w-1/2">
+                <div className="lg:w-1/2">
                     <Table >
                         <TableHeader>
                             <TableRow>
@@ -28,6 +27,7 @@ const InventoryTable = () => {
                                 <TableHead className="text-xl">Category</TableHead>
                                 <TableHead className="text-xl">Stock</TableHead>
                                 <TableHead className="text-xl">Price</TableHead>
+                                <TableHead className="text-xl">Actions</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -37,6 +37,9 @@ const InventoryTable = () => {
                                     <TableCell className="text-md">{item.category}</TableCell>
                                     <TableCell className="text-md">{item.stock}</TableCell>
                                     <TableCell className="text-md">{item.price}</TableCell>
+                                    <TableCell className="text-md">
+                                        <Ellipsis size={16} />
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
