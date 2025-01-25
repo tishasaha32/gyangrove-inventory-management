@@ -15,17 +15,23 @@ const InventoryTable = () => {
     const [openUpdateDialog, setOpenUpdateDialog] = useState<boolean>(false)
     const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false)
     const [editProduct, setEditProduct] = useState<Product>({} as Product)
+    const [deleteProduct, setDeleteProduct] = useState<Product>({} as Product)
 
     const handleUpdateClick = (item: Product) => {
         setEditProduct(item)
         setOpenUpdateDialog(true)
     }
 
+    const handleDeleteClick = (item: Product) => {
+        setDeleteProduct(item)
+        setOpenDeleteDialog(true)
+    }
+
     return (
         <>
             {openAddDialog && (<AddDialog openDialog={openAddDialog} setOpenDialog={setOpenAddDialog} />)}
             {openUpdateDialog && (<UpdateDialog openDialog={openUpdateDialog} setOpenDialog={setOpenUpdateDialog} editProduct={editProduct} />)}
-            {openDeleteDialog && (<DeleteDialog openDialog={openDeleteDialog} setOpenDialog={setOpenDeleteDialog} />)}
+            {openDeleteDialog && (<DeleteDialog openDialog={openDeleteDialog} setOpenDialog={setOpenDeleteDialog} deleteProduct={deleteProduct} />)}
             <div className="flex flex-col items-center">
                 <h1 className="text-3xl font-bold m-4 text-center">Inventory Management System</h1>
                 <div className="flex lg:w-1/2 justify-between gap-5 md:gap-10 p-6 mt-10">
@@ -58,7 +64,7 @@ const InventoryTable = () => {
                                             <PopoverContent className="w-40">
                                                 <div className="flex flex-col gap-2">
                                                     <Button variant="outline" size="sm" onClick={() => handleUpdateClick(item)}>Update</Button>
-                                                    <Button variant="destructive" size="sm" onClick={() => setOpenDeleteDialog(true)}>Delete</Button>
+                                                    <Button variant="destructive" size="sm" onClick={() => handleDeleteClick(item)}>Delete</Button>
                                                 </div>
                                             </PopoverContent>
                                         </Popover>
