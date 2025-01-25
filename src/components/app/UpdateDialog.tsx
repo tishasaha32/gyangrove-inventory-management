@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormField } from "@/components/ui/form";
 import { AddProductSchema } from "@/schemas/AddProduct";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup } from "../ui/select";
 
 interface UpdateDialogProps {
     openDialog: boolean;
@@ -102,11 +103,21 @@ const UpdateDialog = ({
                                 control={form.control}
                                 name="category"
                                 render={({ field }) => (
-                                    <Input
-                                        type="text"
-                                        placeholder="Enter Product Category"
-                                        {...field}
-                                    />
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select a fruit" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectItem value="Grocery">Grocery</SelectItem>
+                                                <SelectItem value="Electronics">Electronics</SelectItem>
+                                                <SelectItem value="Shoes">Shoes</SelectItem>
+                                                <SelectItem value="Accessories">Accessories</SelectItem>
+                                                <SelectItem value="Books">Books</SelectItem>
+                                                <SelectItem value="Others">Others</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                 )}
                             />
                             <FormField
