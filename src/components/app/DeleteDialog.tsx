@@ -1,6 +1,21 @@
-const DeleteDialog = () => {
+import { Button } from "../ui/button"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
+
+interface DeleteDialogProps {
+    openDialog: boolean
+    setOpenDialog: (open: boolean) => void
+}
+
+const DeleteDialog = ({ openDialog, setOpenDialog }: DeleteDialogProps) => {
     return (
-        <div>DeleteDialog</div>
+        <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+            <DialogContent className="flex flex-col gap-4">
+                <p>Are you sure you want to delete this product?</p>
+                <div className="w-full flex justify-end">
+                    <Button variant="destructive">Delete</Button>
+                </div>
+            </DialogContent>
+        </Dialog>
     )
 }
 

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -7,12 +7,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormField } from "@/components/ui/form";
 import { AddProductSchema } from "@/schemas/AddProduct";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Save } from "lucide-react";
 
-interface UpsertDialogProps {
+interface AddDialogProps {
 	openDialog: boolean;
 	setOpenDialog: (open: boolean) => void;
 }
-const UpsertDialog = ({ openDialog, setOpenDialog }: UpsertDialogProps) => {
+const AddDialog = ({ openDialog, setOpenDialog }: AddDialogProps) => {
 	const onOpenChange = (open: boolean) => {
 		setOpenDialog(open);
 	};
@@ -35,7 +36,7 @@ const UpsertDialog = ({ openDialog, setOpenDialog }: UpsertDialogProps) => {
 		const payload = {
 			uuid: uuidv4(),
 			...values,
-		}
+		};
 		const products = localStorage.getItem("products");
 		let updatedProducts = [];
 		if (products) {
@@ -101,7 +102,10 @@ const UpsertDialog = ({ openDialog, setOpenDialog }: UpsertDialogProps) => {
 							/>
 						</div>
 						<div className="flex w-full justify-end">
-							<Button type="submit">Submit</Button>
+							<Button type="submit" variant="secondary">
+								<Save />
+								Submit
+							</Button>
 						</div>
 					</form>
 				</Form>
@@ -110,4 +114,4 @@ const UpsertDialog = ({ openDialog, setOpenDialog }: UpsertDialogProps) => {
 	);
 };
 
-export default UpsertDialog;
+export default AddDialog;
