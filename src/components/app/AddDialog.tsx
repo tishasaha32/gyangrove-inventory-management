@@ -18,7 +18,7 @@ interface AddDialogProps {
 
 const AddDialog = ({ openDialog, setOpenDialog }: AddDialogProps) => {
 	const [selectedImage, setSelectedImage] = useState<string>("");
-	const [imageFile, setImageFile] = useState<File | null>(null);
+	const [, setImageFile] = useState<File | null>(null);
 	const [categorySearch, setCategorySearch] = useState<string>("");
 
 	const categories = [
@@ -152,6 +152,8 @@ const AddDialog = ({ openDialog, setOpenDialog }: AddDialogProps) => {
 															value={categorySearch}
 															onChange={(e) => setCategorySearch(e.target.value)}
 															className="h-8"
+															onClick={(e) => e.stopPropagation()}
+															onKeyDown={(e) => e.stopPropagation()}
 														/>
 													</div>
 													{filteredCategories.map((category) => (
@@ -189,7 +191,7 @@ const AddDialog = ({ openDialog, setOpenDialog }: AddDialogProps) => {
 							<FormField
 								control={form.control}
 								name="image"
-								render={({ field }) => (
+								render={() => (
 									<FormItem>
 										<FormLabel className="text-default">Product Image<span className="text-destructive">*</span></FormLabel>
 										<div className="flex flex-col gap-2">
