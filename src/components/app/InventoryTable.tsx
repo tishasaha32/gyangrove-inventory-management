@@ -118,6 +118,7 @@ const InventoryTable = () => {
                     <Table>
                         <TableHeader>
                             <TableRow>
+                                <TableHead className="text-xl">Image</TableHead>
                                 <TableHead className="text-xl">Product</TableHead>
                                 <TableHead className="text-xl">Category</TableHead>
                                 <TableHead className="text-xl">Stock</TableHead>
@@ -135,7 +136,7 @@ const InventoryTable = () => {
                             ))}
                             {products?.length === 0 || (filteredData?.length === 0 && activeFilter) ? (
                                 <TableRow>
-                                    <TableCell colSpan={5} className="text-center">
+                                    <TableCell colSpan={6} className="text-center">
                                         <div className="flex items-center justify-center flex-col gap-2">
                                             <div className="animate-nod">
                                                 <Frown className="h-16 w-16 text-center" />

@@ -5,4 +5,5 @@ export const AddProductSchema = z.object({
   price: z.string().min(1, "Price is required"),
   category: z.string().min(1, "Category is required"),
   stock: z.string().min(1, "Stock is required"),
+  image: z.string().optional(),
 });

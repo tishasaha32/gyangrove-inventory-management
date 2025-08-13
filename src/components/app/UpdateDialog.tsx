@@ -8,6 +8,7 @@ import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/
 import { AddProductSchema } from "@/schemas/AddProduct";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup } from "@/components/ui/select";
+import { useState, useEffect } from "react";
 
 interface UpdateDialogProps {
     openDialog: boolean;
@@ -19,8 +20,51 @@ const UpdateDialog = ({
     setOpenDialog,
     editProduct,
 }: UpdateDialogProps) => {
+    const [selectedImage, setSelectedImage] = useState<string>("");
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [categorySearch, setCategorySearch] = useState<string>("");
+
+    const categories = [
+        "Hair Accessories",
+        "Earring", 
+        "Necklace",
+        "Bracelet",
+        "Ring",
+        "Gifts",
+        "Gift Box premium",
+        "Gift Box Normal"
+    ];
+
+    const filteredCategories = categories.filter(category =>
+        category.toLowerCase().includes(categorySearch.toLowerCase())
+    );
+
     const onOpenChange = (open: boolean) => {
         setOpenDialog(open);
+        if (!open) {
+            setSelectedImage("");
+            setImageFile(null);
+            setCategorySearch("");
+        }
+    };
+
+    useEffect(() => {
+        if (editProduct?.image) {
+            setSelectedImage(editProduct.image);
+        }
+    }, [editProduct]);
+
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            setImageFile(file);
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const result = e.target?.result as string;
+                setSelectedImage(result);
+            };
+            reader.readAsDataURL(file);
+        }
     };
 
     const defaultValues: z.infer<typeof AddProductSchema> = {
@@ -28,6 +72,7 @@ const UpdateDialog = ({
         price: editProduct?.price.toString() || "",
         category: editProduct?.category || "",
         stock: editProduct?.stock.toString() || "",
+        image: editProduct?.image || "",
     };
 
     const form = useForm<z.infer<typeof AddProductSchema>>({
@@ -38,9 +83,15 @@ const UpdateDialog = ({
 
     // Submit the form data and set it in local storage
     const onSubmit = (values: z.infer<typeof AddProductSchema>) => {
+        if (!selectedImage) {
+            alert("Please select an image");
+            return;
+        }
+
         const payload = {
             uuid: editProduct?.uuid,
             ...values,
+            image: selectedImage,
         };
         console.log(payload);
         const products = localStorage.getItem("products");
@@ -56,6 +107,7 @@ const UpdateDialog = ({
                 category: string;
                 stock: number;
                 price: number;
+                image: string;
             }) => {
                 if (product.uuid === payload.uuid) {
                     return payload;
@@ -119,12 +171,24 @@ const UpdateDialog = ({
                                             </SelectTrigger>
                                             <SelectContent>
                                                 <SelectGroup>
-                                                    <SelectItem value="Grocery">Grocery</SelectItem>
-                                                    <SelectItem value="Electronics">Electronics</SelectItem>
-                                                    <SelectItem value="Shoes">Shoes</SelectItem>
-                                                    <SelectItem value="Accessories">Accessories</SelectItem>
-                                                    <SelectItem value="Books">Books</SelectItem>
-                                                    <SelectItem value="Others">Others</SelectItem>
+                                                    <div className="px-3 py-2">
+                                                        <Input
+                                                            placeholder="Search categories..."
+                                                            value={categorySearch}
+                                                            onChange={(e) => setCategorySearch(e.target.value)}
+                                                            className="h-8"
+                                                        />
+                                                    </div>
+                                                    {filteredCategories.map((category) => (
+                                                        <SelectItem key={category} value={category}>
+                                                            {category}
+                                                        </SelectItem>
+                                                    ))}
+                                                    {filteredCategories.length === 0 && (
+                                                        <div className="px-3 py-2 text-sm text-gray-500">
+                                                            No categories found
+                                                        </div>
+                                                    )}
                                                 </SelectGroup>
                                             </SelectContent>
                                         </Select>
@@ -143,6 +207,34 @@ const UpdateDialog = ({
                                             placeholder="Enter Product Stock"
                                             {...field}
                                         />
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="image"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel className="text-default">Product Image<span className="text-destructive">*</span></FormLabel>
+                                        <div className="flex flex-col gap-2">
+                                            <Input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={handleImageChange}
+                                                className="cursor-pointer"
+                                            />
+                                            {selectedImage && (
+                                                <div className="mt-2">
+                                                    <img 
+                                                        src={selectedImage} 
+                                                        alt="Preview" 
+                                                        className="w-24 h-24 object-cover rounded-md border"
+                                                    />
+                                                    <p className="text-sm text-gray-500 mt-1">Image Preview</p>
+                                                </div>
+                                            )}
+                                        </div>
                                         <FormMessage />
                                     </FormItem>
                                 )}

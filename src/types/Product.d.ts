@@ -4,4 +4,5 @@ type Product = {
   category: string;
   stock: number;
   price: number;
+  image: string;
 };
