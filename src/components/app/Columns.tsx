@@ -19,7 +19,7 @@ const Columns = ({ item, handleUpdateClick, handleDeleteClick }: ColumnsProps) =
             <TableRow
                 key={item.uuid}
                 className={
-                    item.stock < 10 ? "bg-red-100 hover:bg-red-400 hover:text-white" : ""
+                    item.stock == 1 ? "bg-red-100 hover:bg-red-400 hover:text-white" : item.stock == 0 ? "bg-red-400 hover:bg-red-500 text-white" : ""
                 }
             >
                 <TableCell className="text-md">
